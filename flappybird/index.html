@@ -11,10 +11,6 @@
       rel="stylesheet"
     />
     <style>
-      body {
-        user-select: none;
-        -webkit-user-select: none;
-      }
       #muteButton {
         position: absolute;
         top: 10px;
@@ -55,30 +51,5 @@
     <canvas id="canvas" width="276" height="414"></canvas>
 
     <script src="game.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const muteButton = document.getElementById("muteButton");
-        const speakerIcon = document.getElementById("speakerIcon");
-        const crossIcon = document.getElementById("crossIcon");
-
-        // Check local storage for mute state
-        const isMuted = localStorage.getItem("isMuted") === "true";
-
-        if (isMuted) {
-          muteButton.classList.add("muted");
-          speakerIcon.style.display = "none";
-          crossIcon.style.display = "block";
-        }
-
-        muteButton.addEventListener("click", function () {
-          const isMuted = muteButton.classList.toggle("muted");
-          speakerIcon.style.display = isMuted ? "none" : "block";
-          crossIcon.style.display = isMuted ? "block" : "none";
-
-          // Save mute state to local storage
-          localStorage.setItem("isMuted", isMuted);
-        });
-      });
-    </script>
   </body>
 </html>
