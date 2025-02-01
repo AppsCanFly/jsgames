@@ -13,8 +13,12 @@ function toggleMute() {
     }
   }
   const muteButton = document.getElementById("muteButton");
-  muteButton.innerText = isMuted ? "Unmute" : "Mute";
+  const speakerIcon = document.getElementById("speakerIcon");
   muteButton.classList.toggle("muted", isMuted);
+  speakerIcon.innerHTML = isMuted
+    ? '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03zm2.5 0c0 2.5-1.5 4.5-3.5 5.5v-11c2 1 3.5 3 3.5 5.5z"/><path d="M3 10v4h4l5 5V5l-5 5H3zm13.5 0c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03zm2.5 0c0 2.5-1.5 4.5-3.5 5.5v-11c2 1 3.5 3 3.5 5.5z"/><line x1="1" y1="1" x2="23" y2="23" stroke="white" stroke-width="2"/>'
+    : '<path d="M3 10v4h4l5 5V5l-5 5H3zm13.5 0c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03zm2.5 0c0 2.5-1.5 4.5-3.5 5.5v-11c2 1 3.5 3 3.5 5.5z"/>';
+  localStorage.setItem("isMuted", isMuted);
 }
 
 document.addEventListener("keydown", (e) => {
@@ -24,6 +28,14 @@ document.addEventListener("keydown", (e) => {
 });
 
 document.getElementById("muteButton").addEventListener("click", toggleMute);
+
+window.onload = function () {
+  const muteState = localStorage.getItem("isMuted");
+  if (muteState === "true") {
+    isMuted = false; // toggleMute will invert this
+    toggleMute();
+  }
+};
 
 scrn.addEventListener("click", () => {
   switch (state.curr) {
