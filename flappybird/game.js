@@ -2,6 +2,29 @@ const RAD = Math.PI / 180;
 const scrn = document.getElementById("canvas");
 const sctx = scrn.getContext("2d");
 scrn.tabIndex = 1;
+
+let isMuted = false;
+
+function toggleMute() {
+  isMuted = !isMuted;
+  for (let key in SFX) {
+    if (SFX[key] instanceof Audio) {
+      SFX[key].muted = isMuted;
+    }
+  }
+  const muteButton = document.getElementById("muteButton");
+  muteButton.innerText = isMuted ? "Unmute" : "Mute";
+  muteButton.classList.toggle("muted", isMuted);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "m" || e.key === "M") {
+    toggleMute();
+  }
+});
+
+document.getElementById("muteButton").addEventListener("click", toggleMute);
+
 scrn.addEventListener("click", () => {
   switch (state.curr) {
     case state.getReady:
