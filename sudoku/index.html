@@ -10,7 +10,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+      content="width=device-width, initial-scale=1.0, maximum-scale-1"
     />
     <meta name="author" content="Krunal Patel" />
 
@@ -20,33 +20,33 @@
     />
     <link rel="stylesheet" href="css/sudoku.css" />
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script type="text/javascript" src="js/sudoku.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $(".sudoku-game").sudoku({});
-      });
-    </script>
+    <script src="js/sudoku.js"></script>
   </head>
   <body>
     <div class="sudoku-bk">
       <div class="sudoku-controls">
         <button id="restartButton">Restart Game</button>
+        <button id="mainMenuButton">Main Menu</button>
       </div>
       <div class="sudoku-game"></div>
     </div>
     <script>
-      document
-        .getElementById("restartButton")
-        .addEventListener("click", function () {
-          $(".sudoku-game").empty().sudoku({});
-        });
+      document.addEventListener("DOMContentLoaded", function () {
+        initSudokuGame();
 
-      document
-        .getElementById("mainMenuButton")
-        .addEventListener("click", function () {
-          window.location.href = "../index.html";
-        });
+        document
+          .getElementById("restartButton")
+          .addEventListener("click", function () {
+            document.querySelector(".sudoku-game").innerHTML = "";
+            initSudokuGame();
+          });
+
+        document
+          .getElementById("mainMenuButton")
+          .addEventListener("click", function () {
+            window.location.href = "../index.html";
+          });
+      });
     </script>
   </body>
 </html>
