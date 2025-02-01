@@ -25,8 +25,8 @@
   <body>
     <div class="sudoku-bk">
       <div class="sudoku-controls">
-        <button id="restartButton">Restart Game</button>
-        <button id="mainMenuButton">Main Menu</button>
+        <button id="restartButton" style="display: none">Restart Game</button>
+        <div id="timer">Time: 00:00</div>
       </div>
       <div class="sudoku-game"></div>
     </div>
@@ -41,11 +41,34 @@
             initSudokuGame();
           });
 
-        document
-          .getElementById("mainMenuButton")
-          .addEventListener("click", function () {
-            window.location.href = "../index.html";
-          });
+        let timerInterval;
+        let seconds = 0;
+        let minutes = 0;
+
+        function startTimer() {
+          timerInterval = setInterval(function () {
+            seconds++;
+            if (seconds === 60) {
+              minutes++;
+              seconds = 0;
+            }
+            document.getElementById("timer").textContent =
+              "Time: " +
+              (minutes < 10 ? "0" + minutes : minutes) +
+              ":" +
+              (seconds < 10 ? "0" + seconds : seconds);
+          }, 1000);
+        }
+
+        function resetTimer() {
+          clearInterval(timerInterval);
+          seconds = 0;
+          minutes = 0;
+          document.getElementById("timer").textContent = "Time: 00:00";
+        }
+
+        window.startTimer = startTimer;
+        window.resetTimer = resetTimer;
       });
     </script>
   </body>

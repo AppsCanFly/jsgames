@@ -31,6 +31,26 @@ function initSudokuGame() {
   const sudokuGame = document.querySelector(".sudoku-game");
   sudokuGame.classList.add("sdk-game");
 
+  let timerInterval;
+  let seconds = 0;
+
+  function startTimer() {
+    const timerElement = document.getElementById("timer");
+    timerInterval = setInterval(() => {
+      seconds++;
+      const minutes = Math.floor(seconds / 60);
+      const displaySeconds = seconds % 60;
+      timerElement.textContent = `Time: ${String(minutes).padStart(
+        2,
+        "0"
+      )}:${String(displaySeconds).padStart(2, "0")}`;
+    }, 1000);
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+  }
+
   function createMatrix() {
     const matrix = [];
     for (let rowCounter = 0; rowCounter < 9; rowCounter++) {
@@ -146,6 +166,7 @@ function initSudokuGame() {
 
     setTimeout(() => {
       table.classList.remove("sdk-no-show");
+      document.getElementById("restartButton").style.display = "inline-block";
     }, 300);
   }
 
@@ -218,7 +239,8 @@ function initSudokuGame() {
         setTimeout(() => {
           picker.remove();
           createTable();
-        }, 2000);
+          startTimer();
+        }, 500);
       }
     });
 
@@ -231,4 +253,14 @@ function initSudokuGame() {
 
   defaults.matrix = createMatrix();
   createDiffPicker();
+
+  document
+    .getElementById("restartButton")
+    .addEventListener("click", function () {
+      document.querySelector(".sudoku-game").innerHTML = "";
+      stopTimer();
+      seconds = 0;
+      document.getElementById("timer").textContent = "Time: 00:00";
+      initSudokuGame();
+    });
 }
